@@ -22,7 +22,7 @@ knifes/
 3. Cursor
 4. 腾讯元宝（Yuanbao）
 5. Docker Desktop
-6. Rebased（IDEA）
+6. WebStorm
 
 ### 使用方法
 
