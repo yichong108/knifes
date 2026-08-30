@@ -1,2 +1,5 @@
 Python/
 sqlite.db
+__pycache__/
+install-agent-skills/.agents/
+venv/
