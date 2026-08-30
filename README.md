@@ -14,7 +14,8 @@ knifes/
 │   └── install-agent-skills.ps1 # 实际安装逻辑
 └── boot-start/                 # 开机启动管理
     ├── 注册开机启动.bat         # 双击入口
-    ├── register-startup.ps1    # 注册/同步/卸载逻辑
+    ├── register_startup.py     # 注册/同步/卸载逻辑
+    ├── requirements.txt        # Python 依赖（pywin32）
     └── startup-tools.json      # 开机启动名单（绝对路径）
 ```
 
@@ -106,7 +107,15 @@ start-work/启动工作软件.bat
 ```
 
 - 支持 `.bat`、`.ps1`、`.exe` 等可执行入口
-- 不要把 `boot-start/register-startup.ps1` 或 `注册开机启动.bat` 写进名单
+- 不要把 `boot-start/register_startup.py` 或 `注册开机启动.bat` 写进名单
+
+### 依赖
+
+首次使用前安装 Python 依赖（Windows）：
+
+```powershell
+pip install -r boot-start/requirements.txt
+```
 
 ### 使用方法
 
@@ -116,20 +125,20 @@ start-work/启动工作软件.bat
 boot-start/注册开机启动.bat
 ```
 
-或在 PowerShell 中执行：
+或在终端中执行：
 
 ```powershell
 # 同步（默认）：按 JSON 创建/更新/清理启动项
-.\boot-start\register-startup.ps1
+python boot-start/register_startup.py
 
 # 查看状态
-.\boot-start\register-startup.ps1 -Status
+python boot-start/register_startup.py --status
 
 # 移除本工具管理的全部开机启动项
-.\boot-start\register-startup.ps1 -Remove
+python boot-start/register_startup.py --remove
 
 # 指定其他配置文件
-.\boot-start\register-startup.ps1 -ConfigPath D:\path\to\startup-tools.json
+python boot-start/register_startup.py --config-path D:\path\to\startup-tools.json
 ```
 
 快捷方式会写入 Windows「启动」文件夹（`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup`），命名格式为 `knifes-{工具名}.lnk`，可在资源管理器中直接查看或手动删除。

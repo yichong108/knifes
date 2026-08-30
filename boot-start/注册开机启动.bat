@@ -1,4 +1,8 @@
 @echo off
 setlocal
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0register-startup.ps1" %*
+where py >nul 2>&1 && (
+  py -3 "%~dp0register_startup.py" %*
+) || (
+  python "%~dp0register_startup.py" %*
+)
 if errorlevel 1 pause
