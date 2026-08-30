@@ -1,0 +1,6 @@
+{
+  "_comment": "仅填写需要开机自启的业务工具绝对路径；不要加入 boot-start/register-startup.ps1 或 注册开机启动.bat",
+  "tools": [
+    "D:\\wishzhang\\project\\owner\\knifes\\start-work\\启动工作软件.bat"
+  ]
+}

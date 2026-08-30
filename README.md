@@ -9,9 +9,13 @@ knifes/
 ├── start-work/                 # 一键启动日常工作软件
 │   ├── 启动工作软件.bat         # 双击入口
 │   └── start-work-apps.ps1     # 实际启动逻辑
-└── install-agent-skills/       # 安装 agent-skills 到项目
-    ├── 安装AgentSkills.bat      # 双击入口（安装到当前目录项目）
-    └── install-agent-skills.ps1 # 实际安装逻辑
+├── install-agent-skills/       # 安装 agent-skills 到项目
+│   ├── 安装AgentSkills.bat      # 双击入口（安装到当前目录项目）
+│   └── install-agent-skills.ps1 # 实际安装逻辑
+└── boot-start/                 # 开机启动管理
+    ├── 注册开机启动.bat         # 双击入口
+    ├── register-startup.ps1    # 注册/同步/卸载逻辑
+    └── startup-tools.json      # 开机启动名单（绝对路径）
 ```
 
 ## start-work
@@ -84,3 +88,56 @@ start-work/启动工作软件.bat
 | `[OK]` | 已成功安装 |
 | `[SKIP]` | 目标目录已存在，跳过（不覆盖） |
 | `[FAIL]` | 下载失败或 skill 不存在 |
+
+## boot-start
+
+将仓库内指定工具注册到 Windows 开机启动（启动文件夹快捷方式）。**注册器自身不加入开机启动**，仅管理 `startup-tools.json` 中列出的业务工具。
+
+### 配置
+
+编辑 `boot-start/startup-tools.json`，填入需要开机自启的工具**绝对路径**：
+
+```json
+{
+  "tools": [
+    "D:\\wishzhang\\project\\owner\\knifes\\start-work\\启动工作软件.bat"
+  ]
+}
+```
+
+- 支持 `.bat`、`.ps1`、`.exe` 等可执行入口
+- 不要把 `boot-start/register-startup.ps1` 或 `注册开机启动.bat` 写进名单
+
+### 使用方法
+
+编辑好 JSON 后，双击运行：
+
+```
+boot-start/注册开机启动.bat
+```
+
+或在 PowerShell 中执行：
+
+```powershell
+# 同步（默认）：按 JSON 创建/更新/清理启动项
+.\boot-start\register-startup.ps1
+
+# 查看状态
+.\boot-start\register-startup.ps1 -Status
+
+# 移除本工具管理的全部开机启动项
+.\boot-start\register-startup.ps1 -Remove
+
+# 指定其他配置文件
+.\boot-start\register-startup.ps1 -ConfigPath D:\path\to\startup-tools.json
+```
+
+快捷方式会写入 Windows「启动」文件夹（`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup`），命名格式为 `knifes-{工具名}.lnk`，可在资源管理器中直接查看或手动删除。
+
+### 输出说明
+
+| 标记 | 含义 |
+|------|------|
+| `[OK]` | 已创建/更新/移除启动项 |
+| `[SKIP]` | 启动项已存在且指向正确，跳过 |
+| `[FAIL]` | 路径不存在或操作失败 |
