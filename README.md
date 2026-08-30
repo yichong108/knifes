@@ -8,10 +8,10 @@
 knifes/
 ├── start-work/                 # 一键启动日常工作软件
 │   ├── 启动工作软件.bat         # 双击入口
-│   └── start-work-apps.ps1     # 实际启动逻辑
+│   └── start_work_apps.py      # 实际启动逻辑
 ├── install-agent-skills/       # 安装 agent-skills 到项目
 │   ├── 安装AgentSkills.bat      # 双击入口（安装到当前目录项目）
-│   └── install-agent-skills.ps1 # 实际安装逻辑
+│   └── install_agent_skills.py  # 实际安装逻辑
 └── boot-start/                 # 开机启动管理
     ├── 注册开机启动.bat         # 双击入口
     ├── register_startup.py     # 注册/同步/卸载逻辑
@@ -40,15 +40,15 @@ knifes/
 start-work/启动工作软件.bat
 ```
 
-或在 PowerShell 中执行：
+或在终端中执行：
 
 ```powershell
-.\start-work\start-work-apps.ps1
+python start-work/start_work_apps.py
 ```
 
 ### 自定义路径
 
-各软件安装路径写在 `start-work-apps.ps1` 中。若本机安装位置不同，按需修改对应 `Start-AppIfNeeded` 的 `-Path` 参数即可。
+各软件安装路径写在 `start_work_apps.py` 中。若本机安装位置不同，按需修改对应 `start_app_if_needed` 的路径参数即可。
 
 ### 输出说明
 
@@ -68,16 +68,16 @@ start-work/启动工作软件.bat
 
 ```powershell
 # 安装全部 skill（跳过已存在）
-..\knifes\install-agent-skills\install-agent-skills.ps1
+python ../knifes/install-agent-skills/install_agent_skills.py
 
 # 只安装指定 skill
-..\knifes\install-agent-skills\install-agent-skills.ps1 -Skill choice,concept
+python ../knifes/install-agent-skills/install_agent_skills.py --skill choice concept
 
 # 查看仓库里有哪些 skill
-..\knifes\install-agent-skills\install-agent-skills.ps1 -List
+python ../knifes/install-agent-skills/install_agent_skills.py --list
 
 # 指定目标项目路径
-..\knifes\install-agent-skills\install-agent-skills.ps1 -ProjectRoot D:\my-project
+python ../knifes/install-agent-skills/install_agent_skills.py --project-root D:\my-project
 ```
 
 也可双击 `安装AgentSkills.bat`：默认安装到**当前目录**对应项目；也可把项目路径作为第一个参数传入。
