@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install skills from yichong108/agent-skills into .agents/skills (skip if exists)."""
+"""Install skills from yichong108/agent-skills into ~/.agents/skills (skip if exists)."""
 
 from __future__ import annotations
 
@@ -157,9 +157,13 @@ def parse_skill_args(values: list[str] | None) -> list[str]:
     return skills
 
 
+def default_target_dir() -> Path:
+    return Path.home() / ".agents" / "skills"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Install skills from yichong108/agent-skills into .agents/skills"
+        description="Install skills from yichong108/agent-skills into ~/.agents/skills"
     )
     parser.add_argument(
         "--skill",
@@ -167,9 +171,9 @@ def parse_args() -> argparse.Namespace:
         help="Install only specified skills (comma-separated values allowed)",
     )
     parser.add_argument(
-        "--project-root",
-        default=str(Path.cwd()),
-        help="Target project root (default: current directory)",
+        "--target-dir",
+        default=str(default_target_dir()),
+        help="Target skills directory (default: ~/.agents/skills)",
     )
     parser.add_argument(
         "--list",
@@ -181,8 +185,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    project_root = Path(args.project_root).resolve()
-    target_dir = project_root / ".agents" / "skills"
+    target_dir = Path(args.target_dir).resolve()
     requested_skills = parse_skill_args(args.skill)
 
     try:
@@ -219,8 +222,7 @@ def main() -> int:
     source = None
 
     print("=== Install agent-skills ===")
-    print(f"Project: {project_root}")
-    print(f"Target:  {target_dir}")
+    print(f"Target: {target_dir}")
     print()
 
     try:

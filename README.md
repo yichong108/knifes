@@ -9,8 +9,8 @@ knifes/
 ├── start-work/                 # 一键启动日常工作软件
 │   ├── 启动工作软件.bat         # 双击入口
 │   └── start_work_apps.py      # 实际启动逻辑
-├── install-agent-skills/       # 安装 agent-skills 到项目
-│   ├── 安装AgentSkills.bat      # 双击入口（安装到当前目录项目）
+├── install-agent-skills/       # 安装 agent-skills 到用户目录
+│   ├── 安装AgentSkills.bat      # 双击入口
 │   └── install_agent_skills.py  # 实际安装逻辑
 └── boot-start/                 # 开机启动管理
     ├── 注册开机启动.bat         # 双击入口
@@ -60,27 +60,25 @@ python start-work/start_work_apps.py
 
 ## install-agent-skills
 
-从 [yichong108/agent-skills](https://github.com/yichong108/agent-skills) 安装 skill 到项目的 `.agents/skills/` 目录。**已存在的 skill 不会覆盖**。
+从 [yichong108/agent-skills](https://github.com/yichong108/agent-skills) 安装 skill 到用户目录 `~/.agents/skills/`（Windows 下为 `%USERPROFILE%\.agents\skills\`）。**已存在的 skill 不会覆盖**。
 
 ### 使用方法
 
-在目标项目目录下执行（安装到当前项目的 `.agents/skills/`）：
-
 ```powershell
 # 安装全部 skill（跳过已存在）
-python ../knifes/install-agent-skills/install_agent_skills.py
+python install-agent-skills/install_agent_skills.py
 
 # 只安装指定 skill
-python ../knifes/install-agent-skills/install_agent_skills.py --skill choice concept
+python install-agent-skills/install_agent_skills.py --skill choice concept
 
 # 查看仓库里有哪些 skill
-python ../knifes/install-agent-skills/install_agent_skills.py --list
+python install-agent-skills/install_agent_skills.py --list
 
-# 指定目标项目路径
-python ../knifes/install-agent-skills/install_agent_skills.py --project-root D:\my-project
+# 指定其他目标目录（可选）
+python install-agent-skills/install_agent_skills.py --target-dir D:\my-skills
 ```
 
-也可双击 `安装AgentSkills.bat`：默认安装到**当前目录**对应项目；也可把项目路径作为第一个参数传入。
+也可双击 `安装AgentSkills.bat`，默认安装到用户目录下的 `.agents/skills/`。
 
 ### 输出说明
 
