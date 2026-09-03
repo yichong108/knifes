@@ -1,0 +1,7 @@
+{
+  "_comment": "代理开关：true 表示该工具会随打开/关闭代理 bat 一起设置",
+  "proxy": "127.0.0.1:7890",
+  "npm": true,
+  "git": true,
+  "cmd": true
+}
