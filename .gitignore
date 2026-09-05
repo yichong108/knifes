@@ -3,3 +3,4 @@ sqlite.db
 __pycache__/
 venv/
 blackbox/temp
+draft.txt
